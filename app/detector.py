@@ -25,4 +25,4 @@ class Detector:
             Point (0,0) is upper left corner of image.
             Float #5 is the angle (in case the rectangle is rotated somehow).
         '''
-        return [(0.,0.,0.,0.,0.)]
+        return [(0.,0.,float(image.size[0] / 2),float(image.size[1] / 2),0.)]
