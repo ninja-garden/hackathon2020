@@ -28,7 +28,7 @@ class Processor:
 
             # A little workaround with bottom pxl due to PIL's coordinate system starting at the top left corner.
             sx2, sy2 = rotate_point2d(x2, bottom_pxl - y2, -theta)
-            square = (sx2 - x1) * (sy2 - (bottom_pxl - y1))
+            square = abs((sx2 - x1) * (sy2 - (bottom_pxl - y1)))
 
             cx, cy = (sx2 - x1) / 2, (sy2 - (bottom_pxl - y1)) / 2
             cx, cy = rotate_point2d(cx, cy, theta)
@@ -36,14 +36,14 @@ class Processor:
 
             info = self.registry(lat, lon)
 
-            # TODO Add taxed home detection.
+            home_in_registry = self.registry.is_home(lat, lon)
 
             result.append({'x1': x1,
                            'y1': y1,
                            'x2': x2,
                            'y2': y2,
                            'theta': theta,
-                           'found_in_registry': True,
+                           'building_found_in_registry': home_in_registry,
                            'square': square,
                            'cad_no': info['Кадастровый номер']
                            })
