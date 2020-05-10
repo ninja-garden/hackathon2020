@@ -36,14 +36,14 @@ class Processor:
 
             info = self.registry(lat, lon)
 
-            # TODO Add taxed home detection.
+            home_in_registry = self.registry.is_home(lat, lon)
 
             result.append({'x1': x1,
                            'y1': y1,
                            'x2': x2,
                            'y2': y2,
                            'theta': theta,
-                           'found_in_registry': True,
+                           'building_found_in_registry': home_in_registry,
                            'square': square,
                            'cad_no': info['Кадастровый номер']
                            })

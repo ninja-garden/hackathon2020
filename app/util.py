@@ -1,13 +1,17 @@
-import time
 import json
-import re
-import warnings
 import math
+import re
+import time
+import warnings
+from io import BytesIO
+from PIL import Image
 from sys import stderr
 
-from bs4 import BeautifulSoup
+import cv2
+import numpy as np
 import pandas as pd
 import selenium
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
@@ -126,6 +130,20 @@ class RegistryRequester:
         except:
             pass
         return result
+
+    def is_home(self, lat: float, lon: float):
+        warnings.filterwarnings('ignore')
+
+        url_m = 'https://pkk.rosreestr.ru/#/search/'+str(lat)+','+str(lon)+'/20/@fzn9ro91'
+        self.driver.get(url_m)
+        time.sleep(3)
+
+        scr = self.driver.get_screenshot_as_png()
+        scr = Image.open(BytesIO(scr))
+        scr = np.asarray(scr,dtype=np.float32).astype(np.uint8)
+        scr = cv2.cvtColor(scr, cv2.COLOR_BGR2RGB)
+
+        return bool((scr[int(scr.shape[0]/2), int(scr.shape[1]/2)] != [255, 255, 255]).prod())
 
 def pxl_to_geo(pxl_length: float, geo_to_pxl_ratio: float):
     return pxl_length * geo_to_pxl_ratio
