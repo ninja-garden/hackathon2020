@@ -43,6 +43,8 @@ class Processor:
                            'x2': x2,
                            'y2': y2,
                            'theta': theta,
+                           'lat': lat,
+                           'lon': lon,
                            'building_found_in_registry': home_in_registry,
                            'square': square,
                            'cad_no': info['Кадастровый номер']
