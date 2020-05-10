@@ -1,3 +1,6 @@
 [submodule "keras-frcnn"]
 	path = keras-frcnn
 	url = https://github.com/kbardool/keras-frcnn.git
+[submodule "Faster_RCNN_for_Open_Images_Dataset_Keras"]
+	path = Faster_RCNN_for_Open_Images_Dataset_Keras
+	url = https://github.com/RockyXu66/Faster_RCNN_for_Open_Images_Dataset_Keras.git
