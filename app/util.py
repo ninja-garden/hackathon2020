@@ -2,17 +2,17 @@ import time
 import json
 import re
 import warnings
+import math
 from sys import stderr
 
 from bs4 import BeautifulSoup
 import pandas as pd
 import selenium
 from selenium import webdriver
-from tqdm import tqdm
 from selenium.common.exceptions import NoSuchElementException
 
 class RegistryRequester:
-    def __init__(self, selenium_driver_path='/usr/bin/chromedriver': str):
+    def __init__(self, selenium_driver_path='/usr/bin/chromedriver'):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(selenium_driver_path, chrome_options=chrome_options)
@@ -37,10 +37,10 @@ class RegistryRequester:
                     'по документу':[]
                 }
         url_where = 'https://pkk.rosreestr.ru/#/search/'+str(lat)+','+str(lon)+'/13/@qih8n8v9?text='+str(lat)+'%20'+str(lon)+'&type=1&inPoint=true'
-        driver.get(url_where)
+        self.driver.get(url_where)
         time.sleep(1)
-        html = driver.page_source
-        soup = BeautifulSoup(html)
+        html = self.driver.page_source
+        soup = BeautifulSoup(html, features='html.parser')
         try:
             find = soup.findAll('div', {'class':'expanding-box'})
             try:
@@ -132,7 +132,7 @@ def pxl_to_geo(pxl_length: float, geo_to_pxl_ratio: float):
 
 def rotate_point2d(x: float, y: float, theta: float):
     # Multiply by 2d rotation matrix.
-    return math.cos(theta)*x1 - math.sin(theta)*y1, math.sin(theta)*x1 + math.cos(theta)*y1
+    return math.cos(theta)*x - math.sin(theta)*y, math.sin(theta)*x + math.cos(theta)*y
 
 def print_err(*args, sep=' ', end='\n'):
     stderr.write(sep.join([a for a in args]) + end)

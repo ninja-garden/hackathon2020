@@ -3,7 +3,7 @@
 from PIL import Image
 
 class Detector:
-    def __init__(self: Detector, model_path: str):
+    def __init__(self, model_path: str):
         # Init model somehow.
         self.model = None
         pass

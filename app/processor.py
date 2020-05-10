@@ -1,15 +1,14 @@
-import math
 from PIL import Image
 from typing import Dict
 
-from .detector import Detector
-from .util import print_err, RegistryRequester, pxl_to_geo, rotate_point2d
+from detector import Detector
+from util import print_err, RegistryRequester, pxl_to_geo, rotate_point2d
 
 class Processor:
     def __init__(self, config: Dict[str, str]):
         if not 'detector_model' in config:
             print_err('Error: not found "detector_model" in config')
-            exit(1)
+            raise ValueError
         self.detector = Detector(config['detector_model'])
 
         self.registry = None
@@ -29,11 +28,24 @@ class Processor:
 
             # A little workaround with bottom pxl due to PIL's coordinate system starting at the top left corner.
             sx2, sy2 = rotate_point2d(x2, bottom_pxl - y2, -theta)
+            square = (sx2 - x1) * (sy2 - (bottom_pxl - y1))
 
             cx, cy = (sx2 - x1) / 2, (sy2 - (bottom_pxl - y1)) / 2
-            cx, cy = rotate(cx, cy, theta)
+            cx, cy = rotate_point2d(cx, cy, theta)
             lat, lon = south + pxl_to_geo(cy, geo_to_pxl_ratio), west + pxl_to_geo(cx, geo_to_pxl_ratio)
 
             info = self.registry(lat, lon)
 
-            result.append({'x1': })
+            # TODO Add taxed home detection.
+
+            result.append({'x1': x1,
+                           'y1': y1,
+                           'x2': x2,
+                           'y2': y2,
+                           'theta': theta,
+                           'found_in_registry': True,
+                           'square': square,
+                           'cad_no': info['Кадастровый номер']
+                           })
+
+        return result
