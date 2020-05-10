@@ -28,7 +28,7 @@ class Processor:
 
             # A little workaround with bottom pxl due to PIL's coordinate system starting at the top left corner.
             sx2, sy2 = rotate_point2d(x2, bottom_pxl - y2, -theta)
-            square = (sx2 - x1) * (sy2 - (bottom_pxl - y1))
+            square = abs((sx2 - x1) * (sy2 - (bottom_pxl - y1)))
 
             cx, cy = (sx2 - x1) / 2, (sy2 - (bottom_pxl - y1)) / 2
             cx, cy = rotate_point2d(cx, cy, theta)
