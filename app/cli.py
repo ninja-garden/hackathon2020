@@ -20,7 +20,7 @@ def main(config_path, image_path, north, south, west, east):
 
     proc = Processor(config)
     info = proc(image, north, south, west, east)
-    print(info)
+    print(json.dumps(info))
 
 if __name__ == '__main__':
     main()
