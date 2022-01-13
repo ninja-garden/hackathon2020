@@ -4,6 +4,6 @@ Click==7.0
 numpy==1.18.1
 opencv-python==4.2.0.34
 pandas==1.0.3
-Pillow==5.1.0
+Pillow==9.0.0
 selenium==3.141.0
 typing-extensions==3.7.4.1
