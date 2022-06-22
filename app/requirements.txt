@@ -1,7 +1,7 @@
 beautifulsoup4==4.9.0
 bs4==0.0.1
 Click==7.0
-numpy==1.18.1
+numpy==1.22.0
 opencv-python==4.2.0.34
 pandas==1.0.3
 Pillow==5.1.0
